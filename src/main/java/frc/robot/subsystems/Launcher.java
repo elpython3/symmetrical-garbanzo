@@ -6,21 +6,25 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveTrain extends SubsystemBase {
-  public final TalonFX right = new TalonFX(1);
-  public final TalonFX left = new TalonFX(2);
-  /** Creates a new DriveTrain. */
-  public DriveTrain() {}
+public class Launcher extends SubsystemBase {
+  /** Creates a new Launcher. */
+  public TalonFX rightWheel = new TalonFX(3);
+  public TalonFX leftWheel = new TalonFX(4);
+  public AddressableLED led = new AddressableLED(10);
+  public AddressableLEDBuffer buffer = new AddressableLEDBuffer(10);
+  public 
+
+  public Launcher() {}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
-  public void setSpeed(double y, double x){
-    right.set(x);
-    left.set(y);
-  }
+
+
 }
