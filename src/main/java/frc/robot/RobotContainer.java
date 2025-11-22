@@ -4,12 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.DriveKitbot;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Motors;
+import frc.robot.subsystems.Launcher;
+
+import frc.robot.commands.Drive;
+import frc.robot.commands.Launch;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -22,10 +22,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain subsystem = new Drivetrain();
-  private final DriveKitbot command = new DriveKitbot(subsystem);
   
-  private static CommandXboxController joystick = new CommandXboxController(0);
+  private static CommandXboxController controller = new CommandXboxController(0);
+
+  private final Motors motors = new Motors();
+  private final Drive drive = new Drive(motors);
+
+  private final Launcher launcher = new Launcher();
+  private final Launch launch = new Launch(launcher);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -43,15 +47,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    subsystem.setDefaultCommand(command);
+    motors.setDefaultCommand(drive);
+    launcher.setDefaultCommand(launch);
   }
 
   public static double getSpeed(){
-    return joystick.getLeftY();
+    return controller.getLeftY();
   }
 
   public static double getTurn(){
-    return joystick.getRightX();
+    return controller.getRightX();
   }
 
   /**
