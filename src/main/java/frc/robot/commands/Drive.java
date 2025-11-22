@@ -5,11 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drivetrain;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Drive extends Command {
   /** Creates a new Drive. */
+  private Drivetrain drivetrain = new Drivetrain();
+  
   public Drive() {
+    this.drivetrain = drivetrain;
+    addRequirements(drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -19,7 +25,9 @@ public class Drive extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drivetrain.setmotors(RobotContainer.getSpeed(), RobotContainer.getTurn());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
