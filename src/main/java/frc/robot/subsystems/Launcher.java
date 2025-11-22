@@ -33,7 +33,7 @@ public class Launcher extends SubsystemBase {
   }
 
   public void launch() {
-    setSpeed(0.25);
+    setSpeed(0.35);
     setColor(255, 0, 0);
     activatedTime = Timer.getTimestamp();
   }
@@ -58,7 +58,7 @@ public class Launcher extends SubsystemBase {
   @Override
   public void periodic() {
     if (sensor.get()) {
-        launch();
+      launch();
     } else if (activatedTime < Timer.getTimestamp() - ACTIVE_TIME) {
       deactivate();
     }

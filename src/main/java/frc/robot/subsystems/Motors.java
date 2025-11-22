@@ -19,8 +19,8 @@ public class Motors extends SubsystemBase {
   }
 
   public void setSpeed(double speed, double turn) {
-    rightMotor.set(speed - turn);
-    leftMotor.set(speed + turn);
+    rightMotor.set((speed - turn) * 0.5);
+    leftMotor.set((speed + turn) * 0.5);
   }
 
   @Override
