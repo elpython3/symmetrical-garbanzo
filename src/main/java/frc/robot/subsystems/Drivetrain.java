@@ -4,14 +4,24 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
+  private TalonFX wheel1 = new TalonFX(1);
+  private TalonFX wheel2 = new TalonFX(2);
+
   public Drivetrain() {}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void setmotors(double speed, double turn){
+    wheel1.set(speed + turn);
+    wheel2.set(speed - turn);
   }
 }
