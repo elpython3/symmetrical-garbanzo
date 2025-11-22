@@ -6,11 +6,13 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.DriveKitbot;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.MotorDrivetrain;
+import frc.robot.subsystems.ShooterDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -22,10 +24,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain subsystem = new Drivetrain();
-  private final DriveKitbot command = new DriveKitbot(subsystem);
+  private final ShooterDrivetrain m_shooterSubsystem = new ShooterDrivetrain();
   
   private static CommandXboxController joystick = new CommandXboxController(0);
+  private final MotorDrivetrain m_motorDrivetrain = new MotorDrivetrain();
+
+  private final ShooterCommand command = new ShooterCommand(m_shooterSubsystem, m_motorDrivetrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -43,7 +47,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    subsystem.setDefaultCommand(command);
+    m_shooterSubsystem.setDefaultCommand(command);
+    joystick.a().onTrue(new InstantCommand(() -> m_motorDrivetrain.startDriving(getSpeed(), getTurn())));
   }
 
   public static double getSpeed(){
@@ -54,6 +59,7 @@ public class RobotContainer {
     return joystick.getRightX();
   }
 
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -61,6 +67,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+
     return null;
   }
 }
