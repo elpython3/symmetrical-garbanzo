@@ -8,15 +8,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveKitbot extends Command {
-
-  private Drivetrain drivetrain;
-
-  /** Creates a new DriveKitbot. */
-  public DriveKitbot(Drivetrain drivetrain) {
-    this.drivetrain = drivetrain;
+/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+public class Movement extends Command {
+  private Drivetrain wheels = new Drivetrain();
+  private RobotContainer rc = new RobotContainer();
+  /** Creates a new Movement. */
+  public Movement(Drivetrain sub) {
+    wheels = sub;
+    addRequirements(wheels);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +26,7 @@ public class DriveKitbot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(RobotContainer.getSpeed(), RobotContainer.getTurn());
+    wheels.drive(rc.getY(),rc.getX());
   }
 
   // Called once the command ends or is interrupted.

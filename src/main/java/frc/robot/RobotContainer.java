@@ -6,10 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.DriveKitbot;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Fire;
+import frc.robot.commands.Movement;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -22,8 +24,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain subsystem = new Drivetrain();
-  private final DriveKitbot command = new DriveKitbot(subsystem);
+  private final Drivetrain dt = new Drivetrain();
+  private final Shooter shot = new Shooter();
+  private final Fire fire = new Fire(shot); 
+  private final Movement move = new Movement(dt);
+
   
   private static CommandXboxController joystick = new CommandXboxController(0);
 
@@ -43,17 +48,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    subsystem.setDefaultCommand(command);
+    dt.setDefaultCommand(move);
+    shot.setDefaultCommand(fire);
   }
-
-  public static double getSpeed(){
+  public double getX(){
+    return joystick.getLeftX();
+  }
+  public double getY(){
     return joystick.getLeftY();
   }
-
-  public static double getTurn(){
-    return joystick.getRightX();
-  }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
