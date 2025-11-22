@@ -5,11 +5,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Drive extends Command {
   /** Creates a new Drive. */
   public DriveTrain dt;
+  public CommandXboxController xc = new CommandXboxController(30);
   public Drive(DriveTrain dt) {
     this.dt = dt;
     addRequirements(dt);
@@ -18,7 +20,9 @@ public class Drive extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    dt.setSpeed(xc.getLeftX(), xc.getLeftY());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

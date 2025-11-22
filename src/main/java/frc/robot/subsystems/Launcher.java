@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Launcher extends SubsystemBase {
@@ -16,7 +17,7 @@ public class Launcher extends SubsystemBase {
   public TalonFX leftWheel = new TalonFX(4);
   public AddressableLED led = new AddressableLED(10);
   public AddressableLEDBuffer buffer = new AddressableLEDBuffer(10);
-  public 
+  public DigitalInput in = new DigitalInput(10);
 
   public Launcher() {}
 
@@ -25,6 +26,21 @@ public class Launcher extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public void startMotor(){
+    boolean running = in.get();
+    
+    if (running){
+      rightWheel.set(10.0);
+      leftWheel.set(10.0);
+      buffer.setRGB(19, 240,100,80);
+      led.setData(buffer);
+    }
+    else if (!running){
+      rightWheel.set(0.0);
+      leftWheel.set(0.0);
+      buffer.setRGB(19, 0,150,85);
+      led.setData(buffer);
+    }
 
-
+  }
 }

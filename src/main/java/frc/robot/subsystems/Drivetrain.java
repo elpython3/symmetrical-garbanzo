@@ -19,8 +19,11 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setSpeed(double y, double x){
-    right.set(x);
-    left.set(y);
+  public void setSpeed(double yaxis, double xaxis){
+    double rightValue = yaxis + xaxis;
+    double leftValue = yaxis - xaxis;
+
+    right.set(rightValue);
+    left.set(leftValue);
   }
 }

@@ -4,18 +4,26 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Launch extends Command {
+  public Launcher launcher = new Launcher();
+  public Timer tm = new Timer();
   /** Creates a new Launch. */
-  public Launch() {
+  public Launch(Launcher launcher) {
+    this.launcher = launcher;
+  
+    addRequirements(launcher);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    launcher.startMotor();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
